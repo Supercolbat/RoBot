@@ -1,4 +1,4 @@
-local LocalPlayer = Players.LocalPlayer
+local LocalPlayer = game.Players.LocalPlayer
 local workspace = game:GetService("Workspace")
 
 local framework = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/RoBot/master/PluginFramework.lua"))()
@@ -9,7 +9,7 @@ local utils = plugin:utils()
 plugin:ChatCommand(
     {"help"},
     function()
-        utils:chat("")
+        utils:chat("Available commands: !killall, !tptome")
     end
 )
 
@@ -69,9 +69,9 @@ plugin:ChatCommand(
 )
 
 plugin:ChatCommand(
-    {"bring", "tptome"},
+    {"tptome"},
     function(data)
-        LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[data.sender].Character.HumanoidRootPart.CFrame
+        LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[data["sender"]].Character.HumanoidRootPart.CFrame
     end
 )
 

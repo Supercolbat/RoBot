@@ -89,7 +89,7 @@ function RoBot:start()
                     if cmd["type"] == "chat" then
                         if alias(message, cmd["names"]) then
                             cmd["callback"]({
-                                sender=recipient,
+                                sender=recipient.Name,
                                 args=parse(message)
                             })
                         end
