@@ -1,9 +1,10 @@
--- Get random responses each time you execute
 math.randomseed(tick())
+
 
 -- locals --
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
+
 
 -- functions --
 function parse(message)
@@ -26,6 +27,7 @@ function alias(message, aliases)
     return false
 end
 
+
 -- create start function --
 local RoBot = {}
 
@@ -44,12 +46,12 @@ function RoBot:start()
         -- Load plugins
         for _,p in pairs(_G.RBCONFIG["plugins"]) do
             if type(p) == "string" then
-                local plugin = loadstring(game:HttpGet((p)))
-                for _,cmd in pairs(plugin:getcommands()) do
+                local pl = loadstring(game:HttpGet((p)))()
+                for _,cmd in pairs(pl:get()) do
                     table.insert(commands, cmd)
                 end
             elseif type(p) == "table" then
-                for _,cmd in pairs(p:getcommands()) do
+                for _,cmd in pairs(p:get()) do
                     table.insert(commands, cmd)
                 end
             else
@@ -72,8 +74,8 @@ function RoBot:start()
             end
         end)
     end
+
+    print("Successfullly initialized!")
 end
 
 return RoBot
-
---Players.PlayerAdded:Connect(function(player)end)

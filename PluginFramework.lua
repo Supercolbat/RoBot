@@ -1,7 +1,9 @@
+-- locals --
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-
 local PluginFramework = {}
 
+
+-- framework --
 function PluginFramework:NewPlugin()
     local framework = {} -- For subcommands
     local commands = {} -- Where commands are stored to later be interpreted.
@@ -10,7 +12,7 @@ function PluginFramework:NewPlugin()
         table.insert(commands, {type="chat", names=command, callback=callback})
     end
 
-    function framework:getcommands() return commands end
+    function framework:get() return commands end
 
     -- Add utils for basic functions
     function framework:utils()

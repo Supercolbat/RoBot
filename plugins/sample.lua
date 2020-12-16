@@ -1,8 +1,9 @@
+local Player = game:GetService("Players").LocalPlayer
+
 local framework = loadstring(game:HttpGet(("https://raw.githubusercontent.com/Supercolbat/RoBot/master/PluginFramework.lua")))
 local plugin = framework:NewPlugin()
 local utils = plugin:utils()
 
-local Player = game:GetService("Players").LocalPlayer
 
 plugin:ChatCommand(
     {"hello"},
@@ -19,7 +20,7 @@ plugin:ChatCommand(
         elseif args[1] == "money" then
             utils:chat("i dont see any rich people here to steal from")
         else
-            utils:chat("no i dont steal "..args[1])
+            utils:chat("no i dont steal "..table.concat({table.unpack(args, 2)}, ' '))
         end
     end
 )
@@ -30,5 +31,6 @@ plugin:ChatCommand(
         Player.Character.Humanoid.Health = 0
     end
 )
+
 
 return plugin
