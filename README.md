@@ -1,5 +1,3 @@
-
-
 # What is RoBot?
 RoBot is a Roblox framework for making client-sided chatbots.
 Be aware that this is still very much a work in progress.
@@ -18,7 +16,7 @@ _G.RBCONFIG = {
     plugins = {"https://raw.githubusercontent.com/Supercolbat/RoBot/master/plugins/sample.lua"}
 }
 
-RoBot = loadstring(game:HttpGet(("https://raw.githubusercontent.com/Supercolbat/RoBot/master/RoBot.lua")))()
+RoBot = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/RoBot/master/RoBot.lua"))()
 
 RoBot.start()
 ```
@@ -56,10 +54,10 @@ local plugin = PluginFramework:NewPlugin()
 local utils = plugin:utils()
 
 plugin:ChatCommand(
-    {"random"},
-    function()
-        utils:chat("hello")
-    end
+	{"random"},
+	function()
+		utils:chat("hello")
+	end
 )
 
 return plugin
