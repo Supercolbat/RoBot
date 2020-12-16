@@ -1,5 +1,3 @@
-
-
 # What is RoBot?
 RoBot is a Roblox framework for making client-sided chatbots.
 Be aware that this is still very much a work in progress.
