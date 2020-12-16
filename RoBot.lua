@@ -22,8 +22,8 @@ end
 
 function alias(message, aliases)
     for a in aliases do
-        if message:match(_G.config.prefix..a) then
-            return #a + 2
+        if message:match(_G.RBCONFIG.prefix..a) then
+            return true
         end
     end
 
