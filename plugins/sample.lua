@@ -1,6 +1,6 @@
 local Player = game:GetService("Players").LocalPlayer
 
-local framework = loadstring(game:HttpGet(("https://raw.githubusercontent.com/Supercolbat/RoBot/master/PluginFramework.lua")))
+local framework = loadstring(game:HttpGet(("https://raw.githubusercontent.com/Supercolbat/RoBot/master/PluginFramework.lua")))()
 local plugin = framework:NewPlugin()
 local utils = plugin:utils()
 
@@ -16,7 +16,7 @@ plugin:ChatCommand(
     {"steal"},
     function(args)
         if args[1] == "bobux" then
-            utils:chat("how about i steal yours?")
+            utils:chat("what if i steal YOUR bobux?")
         elseif args[1] == "money" then
             utils:chat("i dont see any rich people here to steal from")
         else
