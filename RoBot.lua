@@ -76,20 +76,6 @@ function RoBot:start()
     end
 end
 
+return RoBot
 
-
--- events --
-Players.PlayerAdded:Connect(function(player)
-    local greetings = {
-        "Welcome " .. player.Name .. " to the best game on Roblox!";
-        "Hey there, " .. player.Name .. "!";
-        "Greetings " .. player.Name .. "!"
-    }
-
-    option = greetings[math.random(#greetings)]
-    if type(option) == "function" then
-        chat(option())
-    else
-        chat(option)
-    end
-end)
+--Players.PlayerAdded:Connect(function(player)end)
