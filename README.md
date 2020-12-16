@@ -18,7 +18,7 @@ _G.RBCONFIG = {
     plugins = {"https://github.com/Supercolbat/RoBot/plugins/sample.lua"}
 }
 
-RoBot = loadstring(game:HttpGet(("https://raw.githubusercontent.com/Supercolbat/RoBot/master/RoBot.lua")))()
+RoBot = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/RoBot/master/RoBot.lua"))()
 
 RoBot.start()
 ```
