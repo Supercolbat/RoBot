@@ -1,4 +1,5 @@
 
+
 # What is RoBot?
 RoBot is a Roblox framework for making client-sided chatbots.
 Be aware that this is still very much a work in progress.
@@ -26,7 +27,7 @@ RoBot comes with a framework for making plugins, however you will have to import
 
 The first thing you want to do is import the framework and create a new plugin as shown below.
 ```lua
-local framework = loadstring(game:HttpGet(("https://raw.githubusercontent.com/Supercolbat/RoBot/master/PluginFramework.lua")))()
+local framework = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/RoBot/master/PluginFramework.lua"))()
 local plugin = framework:NewPlugin()
 local utils = plugin:utils()
 ```
@@ -50,15 +51,15 @@ Otherwise, add `return plugin` at the end of the file. Then you can add a link t
 
 Here's an example plugin if you are still confused *(don't worry if you are)*.
 ```lua
-local framework = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/RoBot/master/plugin.lua"))
+local framework = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/RoBot/master/plugin.lua"))()
 local plugin = PluginFramework:NewPlugin()
 local utils = plugin:utils()
 
 plugin:ChatCommand(
-	{"random"},
-	function()
-		utils:chat("hello")
-	end
+    {"random"},
+    function()
+        utils:chat("hello")
+    end
 )
 
 return plugin
