@@ -1,13 +1,6 @@
 -- Get random responses each time you execute
 math.randomseed(tick())
 
-
--- locals --
-local RoBot = {}
-local HttpService = game:GetService("HttpService")
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
-
 -- functions --
 function parse(message)
     local chunks = {}
@@ -25,11 +18,13 @@ function alias(message, aliases)
             return true
         end
     end
-
+    
     return false
 end
 
 -- create start function --
+local RoBot = {}
+
 function RoBot:start()
     local commands = {}
 

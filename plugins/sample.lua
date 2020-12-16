@@ -1,11 +1,21 @@
-local framework = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/RoBot/master/plugin.lua"))
-local plugin = PluginFramework:NewPlugin()
+local framework = loadstring(game:HttpGet(("https://raw.githubusercontent.com/Supercolbat/RoBot/master/PluginFramework.lua")))
+local plugin = framework:NewPlugin()
+local utils = plugin:utils()
+
+local Player = game:GetService("Players").LocalPlayer
 
 plugin:ChatCommand(
-	{"random"},
-	function()
-		plugin:utils:chat("hello")
-	end
+    {"hello"},
+    function()
+        utils:chat("hello")
+    end
+)
+
+plugin:ChatCommand(
+    {"die", "kpop"},
+    function()
+        Player.Character.Humanoid.Health = 0
+    end
 )
 
 return plugin
