@@ -1,6 +1,5 @@
 math.randomseed(tick())
 
-
 -- locals --
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
@@ -27,20 +26,39 @@ function alias(message, aliases)
     return false
 end
 
+function system(type_, msg)
+    local color
+
+    if type_ == "system""warn",  error
+color = Color3.fromRGB(255, 255, 0)
+    elseif type == "error" then
+        Color3.fromRGB(255, 0, 0)
+        game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage",{
+            Text = "RoBot: "..msg,
+            Color = color,
+            Font = Enum.Font.SourceSans,
+            FontSize = Enum.FontSize.Size18
+        })
+    end
+end
+
 
 -- create start function --
 local RoBot = {}
 
 function RoBot:start()
+    -- wait for game to fully load
+    repeat wait() until game.Loaded and game.Players.LocalPlayer and game.Players.LocalPlayer.Character
+
     local commands = {}
 
     -- Check for an improper setup
     if _G.RBCONFIG == nil then
-        warn("RoBot: You must declare _G.RBCONFIG")
+        system("error", "You must declare _G.RBCONFIG")
     elseif _G.RBCONFIG["prefix"] == nil then
-        warn("RoBot: You are missing a prefix")
+        system("error", "You are missing a prefix")
     elseif _G.RBCONFIG["plugins"] == nil then
-        warn("RoBot: You haven't included any plugins")
+        system("error", "You haven't included any plugins")
 
     else
         -- Load plugins
@@ -55,7 +73,7 @@ function RoBot:start()
                     table.insert(commands, cmd)
                 end
             else
-                warn("RoBot: Unknown type found in plugins. '" .. type(p) .. "'")
+                system("warn", "Unknown type found in plugins. '" .. type(p) .. "'")
             end
         end
     

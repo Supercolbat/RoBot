@@ -1,4 +1,5 @@
 -- locals --
+local HttpService = game:GetService("HttpService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local PluginFramework = {}
 
@@ -21,6 +22,15 @@ function PluginFramework:NewPlugin()
         function utils:chat(message, target) -- target is optional
             local Event = ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest
             Event:FireServer(message, target and target or "All")
+        end
+
+        function HttpGet(link, mode)
+            local content
+            local success, response = pcall(function()
+                content = game:HttpGet(link)
+            end)
+            if not success then warn("RoBot: Failed to HttpGet") end
+            return mode.lower() == "json" and HttpService:JSONDecode(content) or content
         end
 
         return utils
