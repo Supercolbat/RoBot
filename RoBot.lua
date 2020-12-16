@@ -29,7 +29,9 @@ end
 function system(type_, msg)
     local color
 
-    if type_ == "warn" then
+    if type_ == "success" then
+        color = Color3.fromRGB(0, 255, 0)
+    elseif type_ == "warn" then
         color = Color3.fromRGB(255, 255, 0)
     elseif type == "error" then
         color Color3.fromRGB(255, 0, 0)

@@ -1,3 +1,5 @@
+
+
 # What is RoBot?
 RoBot is a Roblox framework for making client-sided chatbots.
 Be aware that this is still very much a work in progress.
@@ -13,10 +15,10 @@ Here's an example of what a simple setup should look like.
 ```lua
 _G.RBCONFIG = {
     prefix = "!",
-    plugins = {"https://github.com/Supercolbat/RoBot/plugins/sample.lua"}
+    plugins = {"https://raw.githubusercontent.com/Supercolbat/RoBot/master/plugins/sample.lua"}
 }
 
-RoBot = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/RoBot/master/RoBot.lua"))()
+RoBot = loadstring(game:HttpGet(("https://raw.githubusercontent.com/Supercolbat/RoBot/master/RoBot.lua")))()
 
 RoBot.start()
 ```
@@ -49,7 +51,7 @@ Otherwise, add `return plugin` at the end of the file. Then you can add a link t
 
 Here's an example plugin if you are still confused *(don't worry if you are)*.
 ```lua
-local framework = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/RoBot/master/plugin.lua"))()
+local framework = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/RoBot/master/PluginFramework.lua"))()
 local plugin = PluginFramework:NewPlugin()
 local utils = plugin:utils()
 
@@ -78,6 +80,7 @@ I haven't encountered anything that might be asked as of right now.
 # TODO
 - [ ] Create a wiki page
 - [ ] Give the user more control over the bot
+- [ ] Actually make the framework?
 
 ---
 > Special thanks to [ViniDalvino](https://github.com/ViniDalvino) who made the [Roblox Bible Bot](https://github.com/ViniDalvino/roblox-bible-bot/), which is what inspired me to make RoBot.
