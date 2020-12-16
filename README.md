@@ -80,7 +80,6 @@ I haven't encountered anything that might be asked as of right now.
 # TODO
 - [ ] Create a wiki page
 - [ ] Give the user more control over the bot
-- [ ] Actually make the framework?
 
 ---
 > Special thanks to [ViniDalvino](https://github.com/ViniDalvino) who made the [Roblox Bible Bot](https://github.com/ViniDalvino/roblox-bible-bot/), which is what inspired me to make RoBot.
