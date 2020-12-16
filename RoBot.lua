@@ -45,11 +45,11 @@ function RoBot:start()
         for _,p in pairs(_G.RBCONFIG["plugins"]) do
             if type(p) == "string" then
                 local plugin = loadstring(game:HttpGet((p)))
-                for _,cmd in pairs(plugin:get()) do
+                for _,cmd in pairs(plugin:getcommands()) do
                     table.insert(commands, cmd)
                 end
             elseif type(p) == "table" then
-                for _,cmd in pairs(p:get()) do
+                for _,cmd in pairs(p:getcommands()) do
                     table.insert(commands, cmd)
                 end
             else

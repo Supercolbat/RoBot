@@ -10,7 +10,7 @@ function PluginFramework:NewPlugin()
         table.insert(commands, {type="chat", names=command, callback=callback})
     end
 
-    function framework:get() return commands end
+    function framework:getcommands() return commands end
 
     -- Add utils for basic functions
     function framework:utils()
