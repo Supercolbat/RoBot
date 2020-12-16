@@ -34,14 +34,15 @@ function system(type_, msg)
     elseif type_ == "warn" then
         color = Color3.fromRGB(255, 255, 0)
     elseif type == "error" then
-        color Color3.fromRGB(255, 0, 0)
+        color = Color3.fromRGB(255, 0, 0)
     end
-    game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage",{
-            Text = "RoBot: "..msg,
-            Color = color,
-            Font = Enum.Font.SourceSans,
-            FontSize = Enum.FontSize.Size18
-        })
+
+    game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage", {
+        Text = "RoBot: "..msg,
+        Color = color,
+        Font = Enum.Font.SourceSans,
+        FontSize = Enum.FontSize.Size18
+    })
 end
 
 
@@ -98,7 +99,7 @@ function RoBot:start()
         end)
     end
 
-    print("Successfullly initialized!")
+    system("success", "Successfullly initialized!")
 end
 
 return RoBot
