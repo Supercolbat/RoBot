@@ -7,7 +7,6 @@ local RoBot = {}
 local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 -- functions --
 function parse(message)
@@ -36,25 +35,26 @@ function RoBot:start()
 
     -- Check for an improper setup
     if _G.RBCONFIG == nil then
-        warn("You must declare _G.RBCONFIG")
-    elseif _G.RBCONFIG.prefix == nil then
-        warn("You are missing a prefix")
-    elseif _G.RBCONFIG.plugins == nil then
-        warn("You haven't included any plugins")
+        warn("RoBot: You must declare _G.RBCONFIG")
+    elseif _G.RBCONFIG["prefix"] == nil then
+        warn("RoBot: You are missing a prefix")
+    elseif _G.RBCONFIG["plugins"] == nil then
+        warn("RoBot: You haven't included any plugins")
+
     else
         -- Load plugins
-        for p in _G.RBCONFIG.plugins do
+        for _,p in pairs(_G.RBCONFIG["plugins"]) do
             if type(p) == "string" then
-                local plugin = loadstring(HttpService(p))
-                for cmd in plugin:get() do
+                local plugin = loadstring(HttpService((p)))
+                for _,cmd in pairs(plugin:get()) do
                     table.insert(commands, cmd)
                 end
-            elseif type(p) == "function" then
-                for cmd in p:get() do
+            elseif type(p) == "table" then
+                for _,cmd in pairs(p:get()) do
                     table.insert(commands, cmd)
                 end
             else
-                warn("Unknown type found in plugins. " .. type(p))
+                warn("RoBot: Unknown type found in plugins. '" .. type(p) .. "'")
             end
         end
     
@@ -63,8 +63,8 @@ function RoBot:start()
             if LocalPlayer.Name == recipient.Name then return end
         
             message = string.lower(message)
-            if message:sub(1, 1) == _G.config.prefix then
-                for cmd in commands do
+            if message:sub(1, 1) == _G.RBCONFIG["prefix"] then
+                for _,cmd in pairs(commands) do
                     if cmd["type"] == "chat" then
                         if alias(message, cmd["names"]) then
                             cmd["callback"](parse(message))

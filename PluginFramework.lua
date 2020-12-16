@@ -1,3 +1,5 @@
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
 local PluginFramework = {}
 
 function PluginFramework:NewPlugin()
