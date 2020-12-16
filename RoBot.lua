@@ -44,7 +44,7 @@ function RoBot:start()
         -- Load plugins
         for _,p in pairs(_G.RBCONFIG["plugins"]) do
             if type(p) == "string" then
-                local plugin = loadstring(HttpService((p)))
+                local plugin = loadstring(game:HttpGet((p)))
                 for _,cmd in pairs(plugin:get()) do
                     table.insert(commands, cmd)
                 end
