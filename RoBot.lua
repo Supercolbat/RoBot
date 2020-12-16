@@ -1,10 +1,14 @@
 -- Get random responses each time you execute
 math.randomseed(tick())
 
+-- locals --
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
 -- functions --
 function parse(message)
     local chunks = {}
-    for sb in s:gmatch("%S+") do
+    for sb in message:gmatch("%S+") do
         table.insert(chunks, sb)
     end
 
@@ -13,12 +17,12 @@ function parse(message)
 end
 
 function alias(message, aliases)
-    for a in aliases do
-        if message:match(_G.RBCONFIG.prefix..a) then
+    for _,a in pairs(aliases) do
+        if string.sub(message, 1, string.len(a)+1) == _G.RBCONFIG["prefix"]..a then
             return true
         end
     end
-    
+
     return false
 end
 
@@ -56,8 +60,7 @@ function RoBot:start()
         -- Setup events
         Players.PlayerChatted:Connect(function(chatType, recipient, message)
             if LocalPlayer.Name == recipient.Name then return end
-        
-            message = string.lower(message)
+            
             if message:sub(1, 1) == _G.RBCONFIG["prefix"] then
                 for _,cmd in pairs(commands) do
                     if cmd["type"] == "chat" then
