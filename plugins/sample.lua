@@ -14,13 +14,13 @@ plugin:ChatCommand(
 
 plugin:ChatCommand(
     {"steal"},
-    function(args)
-        if args[1] == "bobux" then
+    function(data)
+        if data["args"][1] == "bobux" then
             utils:chat("what if i steal YOUR bobux?")
-        elseif args[1] == "money" then
+        elseif data["args"][1] == "money" then
             utils:chat("i dont see any rich people here to steal from")
         else
-            utils:chat("no i dont steal "..table.concat({table.unpack(args)}, ' '))
+            utils:chat("no i dont steal "..table.concat({table.unpack(data["args"])}, ' '))
         end
     end
 )

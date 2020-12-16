@@ -1,4 +1,4 @@
-local Player = game:GetService("Players").LocalPlayer
+local LocalPlayer = Players.LocalPlayer
 local workspace = game:GetService("Workspace")
 
 local framework = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/RoBot/master/PluginFramework.lua"))()
@@ -65,6 +65,13 @@ plugin:ChatCommand(
         end
         wait(1)
         workspace.Remote.TeamEvent:FireServer("Bright orange")
+    end
+)
+
+plugin:ChatCommand(
+    {"bring", "tptome"},
+    function(data)
+        LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[data.sender].Character.HumanoidRootPart.CFrame
     end
 )
 

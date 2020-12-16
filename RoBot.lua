@@ -85,7 +85,10 @@ function RoBot:start()
                 for _,cmd in pairs(commands) do
                     if cmd["type"] == "chat" then
                         if alias(message, cmd["names"]) then
-                            cmd["callback"](parse(message))
+                            cmd["callback"]({
+                                sender=recipient,
+                                args=parse(message)
+                            })
                         end
                     end
                 end
