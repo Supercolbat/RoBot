@@ -41,39 +41,39 @@ function RoBot:start()
         warn("You are missing a prefix")
     elseif _G.RBCONFIG.plugins == nil then
         warn("You haven't included any plugins")
-    end
-
-    -- Load plugins
-    for p in _G.RBCONFIG.plugins do
-        if type(p) == "string" then
-            local plugin = loadstring(HttpService(p))
-            for cmd in plugin:get() do
-                table.insert(commands, cmd)
+    else
+        -- Load plugins
+        for p in _G.RBCONFIG.plugins do
+            if type(p) == "string" then
+                local plugin = loadstring(HttpService(p))
+                for cmd in plugin:get() do
+                    table.insert(commands, cmd)
+                end
+            elseif type(p) == "function" then
+                for cmd in p:get() do
+                    table.insert(commands, cmd)
+                end
+            else
+                warn("Unknown type found in plugins. " .. type(p))
             end
-        elseif type(p) == "function" then
-            for cmd in p:get() do
-                table.insert(commands, cmd)
-            end
-        else
-            warn("Unknown type found in plugins. " .. type(p))
         end
-    end
-
-    -- Add commands to events
-    Players.PlayerChatted:Connect(function(chatType, recipient, message)
-        if LocalPlayer.Name == recipient.Name then return end
     
-        message = string.lower(message)
-        if message:sub(1, 1) == _G.config.prefix then
-            for cmd in commands do
-                if cmd["type"] == "chat" then
-                    if alias(message, cmd["names"]) then
-                        cmd["callback"](parse(message))
+        -- Setup events
+        Players.PlayerChatted:Connect(function(chatType, recipient, message)
+            if LocalPlayer.Name == recipient.Name then return end
+        
+            message = string.lower(message)
+            if message:sub(1, 1) == _G.config.prefix then
+                for cmd in commands do
+                    if cmd["type"] == "chat" then
+                        if alias(message, cmd["names"]) then
+                            cmd["callback"](parse(message))
+                        end
                     end
                 end
             end
-        end
-    end)
+        end)
+    end
 end
 
 

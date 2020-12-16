@@ -16,7 +16,7 @@ _G.RBCONFIG = {
     plugins = {"https://github.com/Supercolbat/RoBot/plugins/sample.lua"}
 }
 
-RoBot = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/RoBot/master/RoBot.lua"))()
+RoBot = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/RoBot/master/RoBot.lua", true))()
 
 RoBot.start()
 ```
@@ -25,8 +25,9 @@ RoBot comes with a framework for making plugins, however you will have to import
 
 The first thing you want to do is import the framework and create a new plugin as shown below.
 ```lua
-local framework = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/RoBot/master/PluginFramework.lua"))()
+local framework = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/RoBot/master/PluginFramework.lua", true))()
 local plugin = framework:NewPlugin()
+local utils = plugin:utils()
 ```
 As of right now, the only supported command is `:ChatCommand`, which adds a command and lets you specify how the bot should respond. This is the syntax of the command.
 ```lua
@@ -50,11 +51,12 @@ Here's an example plugin if you are still confused *(don't worry if you are)*.
 ```lua
 local framework = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/RoBot/master/plugin.lua"))
 local plugin = PluginFramework:NewPlugin()
+local utils = plugin:utils()
 
 plugin:ChatCommand(
 	{"random"},
 	function()
-		plugin:utils:chat("hello")
+		utils:chat("hello")
 	end
 )
 
