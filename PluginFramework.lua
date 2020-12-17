@@ -28,7 +28,7 @@ function PluginFramework:NewPlugin()
             return table.concat({table.unpack(list)}, separator and separator or ' ')
         end
 
-        function HttpGet(link, json)
+        function utils:HttpGet(link, json)
             local content
             local success, response = pcall(function()
                 content = game:HttpGet(link)

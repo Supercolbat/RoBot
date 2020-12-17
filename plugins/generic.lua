@@ -1,4 +1,4 @@
-local Player = game:GetService("Players").LocalPlayer
+local LocalPlayer = game:GetService("Players").LocalPlayer
 
 local framework = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/RoBot/master/PluginFramework.lua"))()
 local plugin = framework:NewPlugin()
