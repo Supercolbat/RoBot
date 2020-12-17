@@ -7,6 +7,8 @@ local LocalPlayer = Players.LocalPlayer
 
 -- functions --
 function parse(message)
+    if message == nil then return {} end
+    
     local chunks = {}
     for sb in message:gmatch("%S+") do
         table.insert(chunks, sb)
@@ -33,7 +35,7 @@ function system(type_, msg)
         color = Color3.fromRGB(0, 255, 0)
     elseif type_ == "warn" then
         color = Color3.fromRGB(255, 255, 0)
-    elseif type == "error" then
+    elseif type_ == "error" then
         color = Color3.fromRGB(255, 0, 0)
     end
 
@@ -67,9 +69,18 @@ function RoBot:start()
         -- Load plugins
         for _,p in pairs(_G.RBCONFIG["plugins"]) do
             if type(p) == "string" then
-                local pl = loadstring(game:HttpGet(p))()
-                for _,cmd in pairs(pl:get()) do
-                    table.insert(commands, cmd)
+                local pl
+                pcall(function()
+                    pl = loadstring(game:HttpGet(p))()
+                end)
+
+                if pl then
+                    for _,cmd in pairs(pl:get()) do
+                        table.insert(commands, cmd)
+                    end
+                else
+                    system("error", "Failed to load plugin: "..p)
+                    return
                 end
             elseif type(p) == "table" then
                 for _,cmd in pairs(p:get()) do

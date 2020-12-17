@@ -30,7 +30,7 @@ function PluginFramework:NewPlugin()
                 content = game:HttpGet(link)
             end)
             if not success then warn("RoBot: Failed to HttpGet") end
-            return mode.lower() == "json" and HttpService:JSONDecode(content) or content
+            return string.lower(mode) == "json" and HttpService:JSONDecode(content) or content
         end
 
         return utils
