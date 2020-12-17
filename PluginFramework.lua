@@ -10,7 +10,7 @@ function PluginFramework:NewPlugin()
     local commands = {} -- Where commands are stored to later be interpreted.
 
     function framework:ChatCommand(command, callback)
-        table.insert(commands, {type="chat", names=command, callback=callback})
+        table.insert(commands, {event="chat", aliases=command, callback=callback})
     end
 
     function framework:get() return commands end
@@ -24,13 +24,17 @@ function PluginFramework:NewPlugin()
             Event:FireServer(message, target and target or "All")
         end
 
-        function HttpGet(link, mode)
+        function utils:JoinString(list, separator)
+            return table.concat({table.unpack(list)}, separator and separator or ' ')
+        end
+
+        function HttpGet(link, json)
             local content
             local success, response = pcall(function()
                 content = game:HttpGet(link)
             end)
-            if not success then warn("RoBot: Failed to HttpGet") end
-            return string.lower(mode) == "json" and HttpService:JSONDecode(content) or content
+            if not success then warn("RoBot: Failed to HttpGet") return false end
+            return json and HttpService:JSONDecode(content) or content
         end
 
         return utils

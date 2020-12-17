@@ -97,8 +97,8 @@ function RoBot:start()
             
             if message:sub(1, 1) == _G.RBCONFIG["prefix"] then
                 for _,cmd in pairs(commands) do
-                    if cmd["type"] == "chat" then
-                        if alias(message, cmd["names"]) then
+                    if cmd["event"] == "chat" then
+                        if alias(message, cmd["aliases"]) then
                             cmd["callback"]({
                                 sender=recipient.Name,
                                 args=parse(message)

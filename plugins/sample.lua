@@ -20,7 +20,7 @@ plugin:ChatCommand(
         elseif data["args"][1] == "money" then
             utils:chat("i dont see any rich people here to steal from")
         else
-            utils:chat("no i dont steal "..table.concat({table.unpack(data["args"])}, ' '))
+            utils:chat("what is "..utils:JoinString(data["args"]))
         end
     end
 )
