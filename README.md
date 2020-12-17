@@ -2,7 +2,7 @@
 RoBot is a Roblox framework for making client-sided chatbots.
 Be aware that this is still very much a work in progress.
 
-# How to use the RoBot Framework
+# How to use RoBot
 Read **[Disclaimer](https://github.com/Supercolbat/RoBot#disclaimer)** before proceeding.
 
 If all you care about is using premade RoBot bots, then this is how you do it. First, you'll need to create a global variable named `_G.RBCONFIG`. This is where you will setup the bot's configuration. 
@@ -20,7 +20,7 @@ RoBot = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/R
 
 RoBot.start()
 ```
-# How to make RoBot Plugins
+# How to create RoBot Plugins
 RoBot comes with a framework for making plugins, however you will have to import/loadstring a different file. Note that you can do the same steps even if you want the plugin to be in the same script where you created `_G.RBCONFIG`, which from now on will be called the controller.
 
 The first thing you want to do is import the framework and create a new plugin as shown below.
