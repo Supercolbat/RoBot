@@ -9,7 +9,6 @@ plugin:ChatCommand(
     {"joke"},
     function()
         local joke = utils:HttpGet("https://official-joke-api.appspot.com/random_joke", true)
-        print(joke)
         utils:chat(joke.setup .. ' ' .. joke.punchline)
     end
 )
