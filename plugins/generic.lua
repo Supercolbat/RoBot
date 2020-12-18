@@ -15,11 +15,11 @@ plugin:ChatCommand(
 )
 
 plugin:ChatCommand(
-    {"d", "dict", "dictionary"},
+    {"d", "dictionary", "lookup"},
     function(data)
         if data["args"][1] then
-            local dict = utils:HttpGet("https://api.dictionaryapi.dev/api/v2/entries/en/".., true)
-            if not dict then utils:chat("Request to the API failed! Try again later :(") return end
+            local dict = utils:HttpGet("https://api.dictionaryapi.dev/api/v2/entries/en/", true)
+            if not dict then utils:chat("API request failed! Try again later :'(") return end
 
             local meanings = dict[1]["meanings"]
             local chosen = meanings[utils:random(#table)]
