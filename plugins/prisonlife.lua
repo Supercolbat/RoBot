@@ -1,19 +1,19 @@
 local LocalPlayer = game.Players.LocalPlayer
 local workspace = game:GetService("Workspace")
 
-local framework = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/RoBot/master/ModuleFramework.lua"))()
-local module_ = framework:NewModule()
-local utils = module_:utils()
+local framework = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/RoBot/master/PluginFramework.lua"))()
+local plugin = framework:NewPlugin()
+local utils = plugin:utils()
 
 
-module_:ChatCommand(
+plugin:ChatCommand(
     {"help"},
     function()
-        utils:chat("Available commands: !killall, !tptome")
+        utils:chat("Available commands: !kill <player/all>, !comehere")
     end
 )
 
-module_:ChatCommand(
+plugin:ChatCommand(
     {"kill"},
     function(data)
         workspace.Remote.TeamEvent:FireServer("Medium stone grey")
@@ -59,7 +59,7 @@ module_:ChatCommand(
             Event:FireServer(A_1, A_2)
         end
 
-        if data["args"][0] == "all" then
+        if string.lower(data["args"][1]) == "all" then
             for i,v in pairs(game:GetService("Players"):GetChildren()) do
                 if v.Name ~= LocalPlayer.Name then
                     kill(v)
@@ -67,7 +67,7 @@ module_:ChatCommand(
             end
         else
             for i,v in pairs(game:GetService("Players"):GetChildren()) do
-                if v.Name == data["args"][0] then
+                if v.Name == data["args"][1] then
                     kill(v)
                     break
                 end
@@ -76,7 +76,7 @@ module_:ChatCommand(
     end
 )
 
-module_:ChatCommand(
+plugin:ChatCommand(
     {"comehere"},
     function(data)
         LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[data["sender"]].Character.HumanoidRootPart.CFrame
@@ -84,4 +84,4 @@ module_:ChatCommand(
 )
 
 
-return module_
+return plugin

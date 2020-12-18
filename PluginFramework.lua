@@ -1,11 +1,11 @@
 -- locals --
 local HttpService = game:GetService("HttpService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local ModuleFramework = {}
+local PluginFramework = {}
 
 
 -- framework --
-function ModuleFramework:NewModule()
+function PluginFramework:NewPlugin()
     local framework = {} -- For subcommands
     local commands = {} -- Where commands are stored to later be interpreted.
 
@@ -37,10 +37,15 @@ function ModuleFramework:NewModule()
             return json and HttpService:JSONDecode(content) or content
         end
 
+        function utils:random(max)
+            math.randomseed(tick())
+            return math.random(max)
+        end
+
         return utils
     end
 
     return framework
 end
 
-return ModuleFramework
+return PluginFramework

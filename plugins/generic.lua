@@ -1,31 +1,57 @@
 local LocalPlayer = game:GetService("Players").LocalPlayer
+local Workspace = game:GetService("Workspace")
 
-local framework = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/RoBot/master/ModuleFramework.lua"))()
-local module_ = framework:NewModule()
-local utils = module_:utils()
+local framework = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/RoBot/master/PluginFramework.lua"))()
+local plugin = framework:NewPlugin()
+local utils = plugin:utils()
 
 
-module_:ChatCommand(
+plugin:ChatCommand(
     {"joke"},
     function()
         local joke = utils:HttpGet("https://official-joke-api.appspot.com/random_joke", true)
-        utils:chat(joke.setup .. ' ' .. joke.punchline)
+        utils:chat(joke.setup .. " " .. joke.punchline)
     end
 )
 
-module_:ChatCommand(
+plugin:ChatCommand(
+    {"d", "dict", "dictionary"},
+    function(data)
+        if data["args"][1] then
+            local dict = utils:HttpGet("https://api.dictionaryapi.dev/api/v2/entries/en/".., true)
+            if not dict then utils:chat("Request to the API failed! Try again later :(") return end
+
+            local meanings = dict[1]["meanings"]
+            local chosen = meanings[utils:random(#table)]
+
+            utils:chat("("..chosen["partOfSpeech"]..") "..data["args"][1]..": "..chosen["definitions"][1]["definition"])
+        else
+            utils:chat(data["sender"]..", you have to include the word you want to lookup!")
+        end
+    end
+)
+
+plugin:ChatCommand(
+    {"fps"},
+    function()
+        local fps = Workspace:GetRealPhysicsFPS()
+        utils:chat("My FPS is: " .. fps)
+    end
+)
+
+plugin:ChatCommand(
     {"say"},
     function(data)
         utils:chat(utils:JoinString(data["args"]))
     end
 )
 
-module_:ChatCommand(
-    {"bring"},
+plugin:ChatCommand(
+    {"bring", "comehere", "tptome"},
     function(data)
         LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[data["sender"]].Character.HumanoidRootPart.CFrame
     end
 )
 
 
-return module_
+return plugin

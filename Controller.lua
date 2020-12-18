@@ -62,12 +62,12 @@ function RoBot:start()
         system("error", "You must declare _G.RBCONFIG")
     elseif _G.RBCONFIG["prefix"] == nil then
         system("error", "You are missing a prefix")
-    elseif _G.RBCONFIG["modules"] == nil then
-        system("error", "You haven't included any modules")
+    elseif _G.RBCONFIG["plugins"] == nil then
+        system("error", "You haven't included any plugins")
 
     else
-        -- Load modules
-        for _,p in pairs(_G.RBCONFIG["modules"]) do
+        -- Load plugins
+        for _,p in pairs(_G.RBCONFIG["plugins"]) do
             if type(p) == "string" then
                 local pl
                 pcall(function()
@@ -79,7 +79,7 @@ function RoBot:start()
                         table.insert(commands, cmd)
                     end
                 else
-                    system("error", "Failed to load module: "..p)
+                    system("error", "Failed to load plugin: "..p)
                     return
                 end
             elseif type(p) == "table" then
@@ -87,7 +87,7 @@ function RoBot:start()
                     table.insert(commands, cmd)
                 end
             else
-                system("warn", "Unknown type found in modules. '" .. type(p) .. "'")
+                system("warn", "Unknown type found in plugins. '" .. type(p) .. "'")
             end
         end
     
