@@ -1,11 +1,11 @@
 local LocalPlayer = game:GetService("Players").LocalPlayer
 
-local framework = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/RoBot/master/PluginFramework.lua"))()
-local plugin = framework:NewPlugin()
-local utils = plugin:utils()
+local framework = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/RoBot/master/ModuleFramework.lua"))()
+local module_ = framework:NewModule()
+local utils = module_:utils()
 
 
-plugin:ChatCommand(
+module_:ChatCommand(
     {"joke"},
     function()
         local joke = utils:HttpGet("https://official-joke-api.appspot.com/random_joke", true)
@@ -13,14 +13,14 @@ plugin:ChatCommand(
     end
 )
 
-plugin:ChatCommand(
+module_:ChatCommand(
     {"say"},
     function(data)
         utils:chat(utils:JoinString(data["args"]))
     end
 )
 
-plugin:ChatCommand(
+module_:ChatCommand(
     {"bring"},
     function(data)
         LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[data["sender"]].Character.HumanoidRootPart.CFrame
@@ -28,4 +28,4 @@ plugin:ChatCommand(
 )
 
 
-return plugin
+return module_

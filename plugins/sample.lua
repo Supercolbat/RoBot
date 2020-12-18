@@ -1,18 +1,18 @@
 local Player = game:GetService("Players").LocalPlayer
 
-local framework = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/RoBot/master/PluginFramework.lua"))()
-local plugin = framework:NewPlugin()
-local utils = plugin:utils()
+local framework = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/RoBot/master/ModuleFramework.lua"))()
+local module_ = framework:NewModule()
+local utils = module_:utils()
 
 
-plugin:ChatCommand(
+module_:ChatCommand(
     {"hello"},
     function()
         utils:chat("hello")
     end
 )
 
-plugin:ChatCommand(
+module_:ChatCommand(
     {"steal"},
     function(data)
         if data["args"][1] == "bobux" then
@@ -25,7 +25,7 @@ plugin:ChatCommand(
     end
 )
 
-plugin:ChatCommand(
+module_:ChatCommand(
     {"die"},
     function()
         Player.Character.Humanoid.Health = 0
@@ -33,4 +33,4 @@ plugin:ChatCommand(
 )
 
 
-return plugin
+return module_
