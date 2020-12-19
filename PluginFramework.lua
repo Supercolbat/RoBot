@@ -19,7 +19,7 @@ function PluginFramework:NewPlugin()
     function framework:utils()
         local utils = {}
 
-        function utils:chat(message, target) -- target is optional
+        function utils:Chat(message, target) -- target is optional
             local Event = ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest
             Event:FireServer(message, target and target or "All")
         end
@@ -35,6 +35,11 @@ function PluginFramework:NewPlugin()
             end)
             if not success then warn("RoBot: Failed to HttpGet") return false end
             return json and HttpService:JSONDecode(content) or content
+        end
+
+        function utils:random(max)
+            math.randomseed(tick())
+            return math.random(max)
         end
 
         return utils
