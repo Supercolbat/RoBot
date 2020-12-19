@@ -19,7 +19,7 @@ function PluginFramework:NewPlugin()
     function framework:utils()
         local utils = {}
 
-        function utils:chat(message, target) -- target is optional
+        function utils:Chat(message, target) -- target is optional
             local Event = ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest
             Event:FireServer(message, target and target or "All")
         end

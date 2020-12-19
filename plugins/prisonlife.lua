@@ -9,7 +9,7 @@ local utils = plugin:utils()
 plugin:ChatCommand(
     {"help"},
     function()
-        utils:chat("Available commands: !kill <player/all>, !comehere")
+        utils:Chat("Available commands: !kill <player/all>, !comehere")
     end
 )
 

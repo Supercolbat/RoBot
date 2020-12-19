@@ -10,7 +10,7 @@ plugin:ChatCommand(
     {"joke"},
     function()
         local joke = utils:HttpGet("https://official-joke-api.appspot.com/random_joke", true)
-        utils:chat(joke.setup .. " " .. joke.punchline)
+        utils:Chat(joke.setup .. " " .. joke.punchline)
     end
 )
 
@@ -19,14 +19,14 @@ plugin:ChatCommand(
     function(data)
         if data["args"][1] then
             local dict = utils:HttpGet("https://api.dictionaryapi.dev/api/v2/entries/en/"..data["args"][1], true)
-            if not dict then utils:chat("API request failed! Try again later :'(") return end
+            if not dict then utils:Chat("API request failed! Try again later :'(") return end
 
             local meanings = dict[1]["meanings"]
             local chosen = meanings[utils:random(#table)]
 
-            utils:chat("("..chosen["partOfSpeech"]..") "..data["args"][1]..": "..chosen["definitions"][1]["definition"])
+            utils:Chat("("..chosen["partOfSpeech"]..") "..data["args"][1]..": "..chosen["definitions"][1]["definition"])
         else
-            utils:chat(data["sender"]..", you have to include the word you want to lookup!")
+            utils:Chat(data["sender"]..", you have to include the word you want to lookup!")
         end
     end
 )
@@ -35,14 +35,14 @@ plugin:ChatCommand(
     {"fps"},
     function()
         local fps = Workspace:GetRealPhysicsFPS()
-        utils:chat("My FPS is: " .. fps)
+        utils:Chat("My FPS is: " .. fps)
     end
 )
 
 plugin:ChatCommand(
     {"say"},
     function(data)
-        utils:chat(utils:JoinString(data["args"]))
+        utils:Chat(utils:JoinString(data["args"]))
     end
 )
 
