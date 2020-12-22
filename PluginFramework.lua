@@ -24,7 +24,7 @@ function PluginFramework:NewPlugin()
             Event:FireServer(message, target and target or "All")
         end
 
-        function utils:JoinString(list, separator)
+        function utils:JoinList(list, separator)
             return table.concat({table.unpack(list)}, separator and separator or ' ')
         end
 
