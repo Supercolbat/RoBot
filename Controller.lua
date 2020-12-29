@@ -20,12 +20,12 @@ end
 
 function alias(message, aliases)
     for _,a in pairs(aliases) do
-        if string.sub(message, 1, string.len(a)+1) == _G.RBCONFIG["prefix"]..a then
-            return true
+        if message:find("^" .. _G.RBCONFIG["prefix"] ..a.. "%f[%A]") then
+            return a
         end
     end
 
-    return false
+    return nil
 end
 
 function system(type_, msg)
@@ -67,19 +67,35 @@ function RoBot:start()
 
     else
         -- Load plugins
-        for _,p in pairs(_G.RBCONFIG["plugins"]) do
+        for i,p in pairs(_G.RBCONFIG["plugins"]) do
             if type(p) == "string" then
                 local pl
                 pcall(function()
+                    --[[local matches = {
+                        p:find("pastebin%.com/(%w%w%w%w%w%w%w%w)"),
+                        p:find("github.com/(%w+)/(%w+)/blob/(.+)")
+                    } -- lua pattern matching is painful. i'll need a sophisticated regex library
+                    for i,m in ipairs(matches) do
+                        _,_,m = m
+                        
+                        if m ~= nil then
+                            if i == 1 then
+                                p = "https://pastebin.com/raw/"..p.sub(m)
+                            elseif i == 2 then
+                                p = "https://raw.githubusercontent.com/%1/%2/%3"
+                            end
+                        end
+                    end
+                    --]]
                     pl = loadstring(game:HttpGet(p))()
                 end)
 
-                if pl then
+                if pl ~= nil then
                     for _,cmd in pairs(pl:get()) do
                         table.insert(commands, cmd)
                     end
                 else
-                    system("error", "Failed to load plugin: "..p)
+                    system("error", "Failed to load plugin: " .. p)
                     return
                 end
             elseif type(p) == "table" then
@@ -96,13 +112,16 @@ function RoBot:start()
             if LocalPlayer.Name == recipient.Name then return end
             
             if message:sub(1, 1) == _G.RBCONFIG["prefix"] then
-                for _,cmd in pairs(commands) do
+                for i,cmd in ipairs(commands) do
                     if cmd["event"] == "chat" then
-                        if alias(message, cmd["aliases"]) then
-                            cmd["callback"]({
-                                sender=recipient.Name,
-                                args=parse(message)
-                            })
+                        local cmdname = alias(message, cmd["aliases"])
+                        if not _G.RBCONFIG.PluginConfig.disabled[cmdname] then
+                            if cmdname ~= nil then
+                                cmd["callback"]({
+                                    sender = recipient.Name,
+                                    args   = parse(message)
+                                })
+                            end
                         end
                     end
                 end
