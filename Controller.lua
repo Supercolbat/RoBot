@@ -115,14 +115,14 @@ function RoBot:start()
                 for i,cmd in ipairs(commands) do
                     if cmd["event"] == "chat" then
                         local cmdname = alias(message, cmd["aliases"])
-                        if not _G.RBCONFIG.PluginConfig.disabled[cmdname] then
+                        --if not _G.RBCONFIG.PluginConfig.disabled [cmdname] then
                             if cmdname ~= nil then
                                 cmd["callback"]({
                                     sender = recipient.Name,
                                     args   = parse(message)
                                 })
                             end
-                        end
+                        --end
                     end
                 end
             end
