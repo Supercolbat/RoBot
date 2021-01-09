@@ -5,4 +5,4 @@ RoBot is a Roblox framework for making client-sided chatbots. Take note that thi
 You can learn more about both of these things in the [wiki](https://github.com/Supercolbat/RoBot/wiki).
 
 ---
-> Special thanks to [ViniDalvino](https://github.com/ViniDalvino) who made the [Roblox Bible Bot](https://github.com/ViniDalvino/roblox-bible-bot/), which is what inspired me to make RoBot.
+> Special thanks to [ViniDalvino](https://github.com/ViniDalvino) who made the [Roblox Bible Bot](https://github.com/ViniDalvino/roblox-bible-bot/), which is the inspiration to RoBot.
