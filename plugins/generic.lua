@@ -42,7 +42,7 @@ plugin:ChatCommand(
 plugin:ChatCommand(
     {"say"},
     function(data)
-        utils:Chat(utils:JoinString(data["args"]))
+        utils:Chat(utils:JoinList(data["args"]))
     end
 )
 
