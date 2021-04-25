@@ -42,11 +42,7 @@ plugin:ChatCommand(
 plugin:ChatCommand(
     {"say"},
     function(data)
-<<<<<<< Updated upstream
         utils:Chat(utils:JoinString(data["args"]))
-=======
-        utils:chat(utils:JoinList(data["args"]))
->>>>>>> Stashed changes
     end
 )
 
