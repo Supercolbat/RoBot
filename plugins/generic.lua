@@ -22,7 +22,7 @@ plugin:ChatCommand(
             if not dict then utils:Chat("API request failed! Try again later :'(") return end
 
             local meanings = dict[1]["meanings"]
-            local chosen = meanings[utils:random(#table)]
+            local chosen = meanings[utils:random(#meanings)]
 
             utils:Chat("("..chosen["partOfSpeech"]..") "..data["args"][1]..": "..chosen["definitions"][1]["definition"])
         else
