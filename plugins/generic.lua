@@ -1,16 +1,38 @@
-local LocalPlayer = game:GetService("Players").LocalPlayer
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
 local Workspace = game:GetService("Workspace")
 
+local RoBot = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/RoBot/master/Controller.lua"))()
 local framework = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/RoBot/master/PluginFramework.lua"))()
 local plugin = framework:NewPlugin()
 local utils = plugin:utils()
 
 
+function getRoot(char)
+	local rootPart = char:FindFirstChild('HumanoidRootPart') or char:FindFirstChild('Torso') or char:FindFirstChild('UpperTorso')
+	return rootPart
+end
+
+
 plugin:ChatCommand(
     {"joke"},
     function()
-        local joke = utils:HttpGet("https://official-joke-api.appspot.com/random_joke", true)
-        utils:Chat(joke.setup .. " " .. joke.punchline)
+        local joke = utils:HttpGet("https://v2.jokeapi.dev/joke/Miscellaneous,Dark,Pun,Spooky,Christmas?blacklistFlags=nsfw,religious,political,racist,sexist,explicit&format=txt&safe-mode")
+        for line in string.gmatch(joke, "([^\n]+)") do
+            print(line)
+            utils:Chat(line)
+        end
+    end
+)
+
+plugin:ChatCommand(
+    {"anyjoke"},
+    function()
+        local joke = utils:HttpGet("https://v2.jokeapi.dev/joke/Any?format=txt")
+        for line in string.gmatch(joke, "([^\n]+)") do
+            print(line)
+            utils:Chat(line)
+        end
     end
 )
 
@@ -26,7 +48,7 @@ plugin:ChatCommand(
 
             utils:Chat("("..chosen["partOfSpeech"]..") "..data["args"][1]..": "..chosen["definitions"][1]["definition"])
         else
-            utils:Chat(data["sender"]..", you have to include the word you want to lookup!")
+            utils:Chat(data["sender"].Name..", you have to include the word you want to lookup!")
         end
     end
 )
@@ -35,7 +57,7 @@ plugin:ChatCommand(
     {"fps"},
     function()
         local fps = Workspace:GetRealPhysicsFPS()
-        utils:Chat("My FPS is: " .. fps)
+        utils:Chat("I'm running at " .. fps .. " FPS")
     end
 )
 
@@ -47,11 +69,57 @@ plugin:ChatCommand(
 )
 
 plugin:ChatCommand(
-    {"bring", "comehere", "tptome"},
+    {"bring", "come"},
     function(data)
         LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[data["sender"]].Character.HumanoidRootPart.CFrame
     end
 )
 
+plugin:ChatCommand(
+    {"goto", "tp"},
+    function(data)
+        local player = utils:GetPlayer(data["args"]);
+        if player then
+            LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[data["sender"]].Character.HumanoidRootPart.CFrame
+        else
+            utils:Chat("Sorry I couldn't find a player by that name");
+        end
+    end
+)
 
-return plugin
+plugin:ChatCommand(
+    {"headsit"},
+    function(data)
+        -- https://www.github.com/EdgeIY/infiniteyield
+        
+        local target = data["args"][1] ~= nil and utils:GetPlayer(data["args"][1]) or data["sender"]
+
+        if target == nil then
+            utils:Chat("Player not found")
+            return
+        elseif target == LocalPlayer then
+            utils:Chat("Hey I can't headsit myself >:(")
+            return
+        end
+
+        target = target.Character
+        local player = LocalPlayer.Character;
+        player:FindFirstChildOfClass('Humanoid').Sit = true
+        head_sit = game:GetService("RunService").Heartbeat:Connect(function()
+            if target ~= nil and getRoot(target) and getRoot(player) then
+                if Players:FindFirstChild(utils:getPlayer(data["args"][1]).Name) and player:FindFirstChildOfClass('Humanoid').Sit == true then
+                    getRoot(player).CFrame = getRoot(target).CFrame * CFrame.Angles(0, math.rad(0), 0) * CFrame.new(0, 1.6, 0.4)
+                else
+                    head_sit:Disconnect()
+                end
+            end
+        end)
+    end
+)
+
+_G.RBCONFIG = {
+    prefix=";",
+    plugins={plugin}
+}
+
+RoBot:start()

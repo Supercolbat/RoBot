@@ -1,3 +1,4 @@
+-- Ensure that the responses will be different each run
 math.randomseed(tick())
 
 -- locals --
@@ -29,19 +30,19 @@ function alias(message, aliases)
     return false
 end
 
-function system(type_, msg)
+function system(log_type, message)
     local color
 
-    if type_ == "success" then
+    if log_type == "success" then
         color = Color3.fromRGB(0, 255, 0)
-    elseif type_ == "warn" then
+    elseif log_type == "warn" then
         color = Color3.fromRGB(255, 255, 0)
-    elseif type_ == "error" then
+    elseif log_type == "error" then
         color = Color3.fromRGB(255, 0, 0)
     end
 
     game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage", {
-        Text = "RoBot: "..msg,
+        Text = "RoBot: " .. message,
         Color = color,
         Font = Enum.Font.SourceSans,
         FontSize = Enum.FontSize.Size18
@@ -49,11 +50,11 @@ function system(type_, msg)
 end
 
 
--- create start function --
+-- start function --
 local RoBot = {}
 
 function RoBot:start()
-    -- wait for game to fully load
+    -- Wait for game to fully load
     repeat wait() until game.Loaded and game.Players.LocalPlayer and game.Players.LocalPlayer.Character
 
     local commands = {}
@@ -66,9 +67,10 @@ function RoBot:start()
     elseif _G.RBCONFIG["plugins"] == nil then
         system("error", "You haven't included any plugins")
 
+    -- Proceed if setup is correct
     else
-        -- Load plugins
-        for _,p in pairs(_G.RBCONFIG["plugins"]) do
+        for _, p in pairs(_G.RBCONFIG["plugins"]) do
+            -- Load plugin from URL
             if type(p) == "string" then
                 local pl
                 pcall(function()
@@ -83,26 +85,30 @@ function RoBot:start()
                     system("error", "Failed to load plugin: "..p)
                     return
                 end
+
+            -- Load plugin locally
             elseif type(p) == "table" then
-                for _,cmd in pairs(p:get()) do
+                for _, cmd in pairs(p:get()) do
                     table.insert(commands, cmd)
                 end
+
             else
                 system("warn", "Unknown type found in plugins. '" .. type(p) .. "'")
             end
         end
     
         -- Setup events
-        Players.PlayerChatted:Connect(function(chatType, recipient, message)
+        Players.PlayerChatted:Connect(function(chat_type, recipient, message)
+            -- Prevent the bot from replying to itself
             if LocalPlayer.Name == recipient.Name then return end
             
             if message:sub(1, 1) == _G.RBCONFIG["prefix"] then
-                for _,cmd in pairs(commands) do
+                for _, cmd in pairs(commands) do
                     if cmd["event"] == "chat" then
                         if alias(message, cmd["aliases"]) then
                             cmd["callback"]({
-                                sender=recipient.Name,
-                                args=parse(message)
+                                sender = recipient,
+                                args   = parse(message)
                             })
                         end
                     end
