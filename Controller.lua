@@ -21,7 +21,6 @@ end
 
 function alias(message, aliases)
     for _,a in pairs(aliases) do
-        -- if message:find("^".._G.RBCONFIG["prefix"]..a.. "whatpattern?") -- pattern should check for a space or eol
         if string.match(message, "^".._G.RBCONFIG["prefix"]..a.."%f[%A]") then
             return true
         end
@@ -39,6 +38,8 @@ function system(log_type, message)
         color = Color3.fromRGB(255, 255, 0)
     elseif log_type == "error" then
         color = Color3.fromRGB(255, 0, 0)
+    elseif log_type == "info" then
+        color = Color3.fromRGB(0, 100, 255)
     end
 
     game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage", {
@@ -106,6 +107,9 @@ function RoBot:start()
                 for _, cmd in pairs(commands) do
                     if cmd["event"] == "chat" then
                         if alias(message, cmd["aliases"]) then
+                            if  _G.RBCONFIG["log"] then
+                                system("info", recipient.Name .. " " .. recipient.UserId)
+                            end
                             cmd["callback"]({
                                 sender = recipient,
                                 args   = parse(message)
