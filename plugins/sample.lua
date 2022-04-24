@@ -2,7 +2,7 @@ local Player = game:GetService("Players").LocalPlayer
 
 local framework = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/RoBot/master/PluginFramework.lua"))()
 local plugin = framework:NewPlugin()
-local utils = plugin:utils()
+local utils = framework:utils()
 
 
 plugin:ChatCommand(
@@ -20,11 +20,7 @@ plugin:ChatCommand(
         elseif data["args"][1] == "money" then
             utils:Chat("i dont see any rich people here to steal from")
         else
-<<<<<<< Updated upstream
-            utils:Chat("what is "..utils:JoinString(data["args"]))
-=======
             utils:chat("what is "..utils:JoinList(data["args"]))
->>>>>>> Stashed changes
         end
     end
 )

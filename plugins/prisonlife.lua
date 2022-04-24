@@ -3,7 +3,7 @@ local workspace = game:GetService("Workspace")
 
 local framework = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/RoBot/master/PluginFramework.lua"))()
 local plugin = framework:NewPlugin()
-local utils = plugin:utils()
+local utils = framework:utils()
 
 
 plugin:ChatCommand(

@@ -5,7 +5,7 @@ local Workspace = game:GetService("Workspace")
 local RoBot = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/RoBot/master/Controller.lua"))()
 local framework = loadstring(game:HttpGet("https://raw.githubusercontent.com/Supercolbat/RoBot/master/PluginFramework.lua"))()
 local plugin = framework:NewPlugin()
-local utils = plugin:utils()
+local utils = framework:utils()
 
 
 function getRoot(char)
@@ -13,6 +13,14 @@ function getRoot(char)
 	return rootPart
 end
 
+
+plugin:ChatCommand(
+    {"help"},
+    function()
+        utils:Chat("Hi there! I can do ;joke, ;say <message>, ;dictionary <word>, ;bring, and ;goto <player>")
+        utils:Chat("Ask me for additional information on specific commands and I'll tell you!")
+    end
+)
 
 plugin:ChatCommand(
     {"joke"},
@@ -71,55 +79,63 @@ plugin:ChatCommand(
 plugin:ChatCommand(
     {"bring", "come"},
     function(data)
-        LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[data["sender"]].Character.HumanoidRootPart.CFrame
+        LocalPlayer.Character.HumanoidRootPart.CFrame = data["sender"].Character.HumanoidRootPart.CFrame
     end
 )
 
 plugin:ChatCommand(
     {"goto", "tp"},
     function(data)
-        local player = utils:GetPlayer(data["args"]);
+        local player = utils:GetPlayer(data["args"][1]);
         if player then
-            LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[data["sender"]].Character.HumanoidRootPart.CFrame
+            LocalPlayer.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame
         else
-            utils:Chat("Sorry I couldn't find a player by that name");
+            utils:Chat("Sorry, I couldn't find a player by that name!");
         end
     end
 )
 
 plugin:ChatCommand(
-    {"headsit"},
+    {"die", "reset"},
     function(data)
-        -- https://www.github.com/EdgeIY/infiniteyield
-        
-        local target = data["args"][1] ~= nil and utils:GetPlayer(data["args"][1]) or data["sender"]
-
-        if target == nil then
-            utils:Chat("Player not found")
-            return
-        elseif target == LocalPlayer then
-            utils:Chat("Hey I can't headsit myself >:(")
-            return
-        end
-
-        target = target.Character
-        local player = LocalPlayer.Character;
-        player:FindFirstChildOfClass('Humanoid').Sit = true
-        head_sit = game:GetService("RunService").Heartbeat:Connect(function()
-            if target ~= nil and getRoot(target) and getRoot(player) then
-                if Players:FindFirstChild(utils:getPlayer(data["args"][1]).Name) and player:FindFirstChildOfClass('Humanoid').Sit == true then
-                    getRoot(player).CFrame = getRoot(target).CFrame * CFrame.Angles(0, math.rad(0), 0) * CFrame.new(0, 1.6, 0.4)
-                else
-                    head_sit:Disconnect()
-                end
-            end
-        end)
+        LocalPlayer.Character:BreakJoints()
     end
 )
 
+-- plugin:ChatCommand(
+--     {"headsit"},
+--     function(data)
+--         -- https://www.github.com/EdgeIY/infiniteyield
+        
+--         local target = data["args"][1] ~= nil and utils:GetPlayer(data["args"][1]) or data["sender"]
+
+--         if target == nil then
+--             utils:Chat("Player not found")
+--             return
+--         elseif target == LocalPlayer then
+--             utils:Chat("Hey I can't headsit myself >:(")
+--             return
+--         end
+
+--         target = target.Character
+--         local player = LocalPlayer.Character;
+--         player:FindFirstChildOfClass('Humanoid').Sit = true
+--         head_sit = game:GetService("RunService").Heartbeat:Connect(function()
+--             if target ~= nil and getRoot(target) and getRoot(player) then
+--                 if Players:FindFirstChild(utils:getPlayer(data["args"][1]).Name) and player:FindFirstChildOfClass('Humanoid').Sit == true then
+--                     getRoot(player).CFrame = getRoot(target).CFrame * CFrame.Angles(0, math.rad(0), 0) * CFrame.new(0, 1.6, 0.4)
+--                 else
+--                     head_sit:Disconnect()
+--                 end
+--             end
+--         end)
+--     end
+-- )
+
 _G.RBCONFIG = {
     prefix=";",
-    plugins={plugin}
+    plugins={plugin},
+    log=true
 }
 
 RoBot:start()
