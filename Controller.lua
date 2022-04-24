@@ -22,7 +22,7 @@ end
 function alias(message, aliases)
     for _,a in pairs(aliases) do
         -- if message:find("^".._G.RBCONFIG["prefix"]..a.. "whatpattern?") -- pattern should check for a space or eol
-        if string.gmatch(message, "^".._G.RBCONFIG["prefix"]..a.." .+?") then
+        if string.match(message, "^".._G.RBCONFIG["prefix"]..a.."%f[%A]") then
             return true
         end
     end
